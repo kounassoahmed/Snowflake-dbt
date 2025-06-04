@@ -1,7 +1,7 @@
 {{ config(materialized='incremental', unique_key='document_key') }}
 
 select
-    concat_ws('-', company_code, document_number, fiscal_year) as document_key,
+    concat_ws('-', bukrs, belnr, gjahr) as document_key,
     *
 from {{ ref('stg_bkpf') }}
 
