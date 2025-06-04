@@ -26,8 +26,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install dbt-core dbt-snowflake
 
-      - name: 🛠 Set environment variable
-        run: echo "DBT_ENV=${{ github.ref_name }}" >> $GITHUB_ENV
+      - name: 🛠 Set DBT_ENV from branch
+        run: |
+          echo "DBT_ENV=$(echo ${{ github.ref_name }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
 
       - name: 🔐 Write DBT private key file
         run: |
