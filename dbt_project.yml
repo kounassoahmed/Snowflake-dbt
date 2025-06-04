@@ -1,0 +1,15 @@
+snowflake_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: gn16349
+      user: TERRAFORM_DEV_SVC
+      role: ACCOUNTADMIN
+      authenticator: snowflake_jwt
+      private_key_path: ~/.ssh/dbt_key.p8
+      database: DEV_SAP_STG
+      warehouse: WH_DEV_SAP_STG
+      schema: STG
+      threads: 4
+      client_session_keep_alive: false
