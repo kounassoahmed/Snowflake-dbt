@@ -3,7 +3,7 @@
 select
     concat_ws('-', bukrs, belnr, gjahr) as document_key,
     *
-from {{ ref('stg_bkpf') }}
+from {{ ref('bkpf') }}
 
 {% if is_incremental() %}
 where document_key not in (select document_key from {{ this }})
