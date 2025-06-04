@@ -1,4 +1,4 @@
-{{ config(materialized='table', schema='STG' }}
+{{ config(materialized='table', schema='STG') }}
 
 select
   $1::string as bukrs,
