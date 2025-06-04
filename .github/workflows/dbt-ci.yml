@@ -38,7 +38,7 @@ jobs:
       - name: 🔐 Configure dbt profiles.yml
         run: |
           mkdir -p ~/.dbt
-          echo "${{ secrets.DBT_PROFILES_YML }}" > ~/.dbt/profiles.yml
+          printf "%s\n" "${{ secrets.DBT_PROFILES_YML }}" > ~/.dbt/profiles.yml
 
       - name: 🚀 Run dbt models
         run: |
