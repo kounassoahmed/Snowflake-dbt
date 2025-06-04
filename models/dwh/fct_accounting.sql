@@ -1,5 +1,5 @@
 
-{{ config(materialized='incremental', unique_key='fact_key', schema=env_var('DBT_ENV') ~ '_DWH') }}
+{{ config(materialized='incremental', unique_key='fact_key', schema='DWH') }}
 
 with joined_data as (
     select
