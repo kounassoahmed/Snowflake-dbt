@@ -1,9 +1,9 @@
 {{ config(materialized='incremental', unique_key='company_code') }}
 
 select
-    company_code,
-    company_name,
-    country
+    bukrs,
+    butxt,
+    land1
 from {{ ref('stg_t001') }}
 
 {% if is_incremental() %}
