@@ -1,5 +1,4 @@
-
-{{ config(materialized='incremental', unique_key='line_key', schema=env_var('DBT_ENV') ~ '_RAW') }}
+{{ config(materialized='incremental', unique_key='line_key') }}
 
 select
     concat_ws('-', company_code, document_number, fiscal_year, line_item) as line_key,
