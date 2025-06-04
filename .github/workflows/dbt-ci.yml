@@ -2,11 +2,11 @@ name: Run DBT on Snowflake
 
 on:
   workflow_dispatch:  # Allows manual run
-  push:
-    branches:
-      - dev
-      - uat
-      - prod
+  # push:
+  #   branches:
+  #     - dev
+  #     - uat
+  #     - prod
 
 jobs:
   dbt-run:
