@@ -26,9 +26,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install dbt-core dbt-snowflake
 
-      - name: 🛠 Set environment variables
+      - name: 🛠 Set environment variable
+        run: echo "DBT_ENV=${{ github.ref_name }}" >> $GITHUB_ENV
+
+      - name: 🔐 Write DBT private key file
         run: |
-          echo "DBT_ENV=${{ github.ref_name }}" >> $GITHUB_ENV
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DBT_PRIVATE_KEY }}" > ~/.ssh/dbt_key.p8
+          chmod 600 ~/.ssh/dbt_key.p8
 
       - name: 🔐 Configure dbt profiles.yml
         run: |
