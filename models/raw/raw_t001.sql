@@ -1,5 +1,4 @@
-
-{{ config(materialized='incremental', unique_key='company_code', schema=env_var('DBT_ENV') ~ '_RAW') }}
+{{ config(materialized='incremental', unique_key='company_code') }}
 
 select
     company_code,
