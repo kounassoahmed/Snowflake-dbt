@@ -1,3 +1,4 @@
+{{ config(materialized='table') }}
 select
     $1::string as bukrs,
     $2::string as belnr,
