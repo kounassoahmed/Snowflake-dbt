@@ -1,4 +1,5 @@
-select
+{{ config(materialized='table') }}
+  select
   $1::string as bukrs,
   $2::string as butxt,
   $3::string as land1
