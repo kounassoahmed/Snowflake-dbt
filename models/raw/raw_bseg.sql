@@ -1,7 +1,7 @@
 {{ config(materialized='incremental', unique_key='line_key') }}
 
 select
-    concat_ws('-', company_code, document_number, fiscal_year, line_item) as line_key,
+    concat_ws('-', bukrs, belnr, gjahr, buzei) as line_key,
     *
 from {{ ref('stg_bseg') }}
 
