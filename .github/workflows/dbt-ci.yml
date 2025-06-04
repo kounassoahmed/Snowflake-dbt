@@ -40,9 +40,13 @@ jobs:
           chmod 600 ~/.ssh/dbt_key.p8
 
       - name: 🔐 Configure dbt profiles.yml
+        shell: bash
         run: |
           mkdir -p ~/.dbt
-          printf "%s\n" "${{ secrets.DBT_PROFILES_YML }}" > ~/.dbt/profiles.yml
+          cat <<EOF > ~/.dbt/profiles.yml
+      ${{ secrets.DBT_PROFILES_YML }}
+      EOF
+
 
 
       - name: 🚀 Run dbt models
