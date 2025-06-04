@@ -1,5 +1,5 @@
 
-{{ config(materialized='table', schema=env_var('DBT_ENV') ~ '_STG') }}
+{{ config(materialized='table', schema='STG' }}
 
 select
     $1::string as bukrs,
