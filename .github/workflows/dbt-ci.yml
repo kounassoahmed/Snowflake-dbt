@@ -49,7 +49,17 @@ jobs:
 
 
 
-      - name: 🚀 Run dbt models
+      - name: 🚀 Run dbt models with dynamic date
         run: |
+          TODAY=$(date +'%Y %m %d')
+          set -- $TODAY
+          YEAR=$1
+          MONTH=$2
+          DAY=$3
+      
           dbt deps
-          dbt run --profiles-dir ~/.dbt --project-dir .
+          dbt run \
+            --vars "{\"year\": \"$YEAR\", \"month\": \"$MONTH\", \"day\": \"$DAY\"}" \
+            --profiles-dir ~/.dbt \
+            --project-dir .
+
