@@ -7,7 +7,8 @@ model-paths: ["models"]
 
 models:
   snowflake_dbt:
-    +materialized: table 
+    +materialized: table
+    +alias: "{{ generate_alias_name(None, this) }}"
     
     raw:
       +schema: RAW
