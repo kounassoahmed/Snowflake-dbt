@@ -5,4 +5,4 @@ select
   $3::string as gjahr,
   $4::string as buzei,
   $5::float as wrbtr
-from @DEV_SAP_STG.STG.SAP_STAGE/2024/06/01/bseg.csv;
+from @DEV_SAP_STG.STG.SAP_STAGE/2024/06/01/bseg.csv
