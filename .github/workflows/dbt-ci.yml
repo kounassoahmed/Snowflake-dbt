@@ -56,7 +56,8 @@ jobs:
           YEAR=$1
           MONTH=$2
           DAY=$3
-      
+          echo "DBT starting load for $YEAR, $MONTH, $DAY"
+          
           dbt deps
           dbt run \
             --vars "{\"year\": \"$YEAR\", \"month\": \"$MONTH\", \"day\": \"$DAY\"}" \
