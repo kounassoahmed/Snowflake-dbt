@@ -66,8 +66,15 @@ jobs:
           echo "DBT starting load for $YEAR, $MONTH, $DAY"
           
           dbt deps
-          dbt run \
-            --vars "{\"year\": \"$YEAR\", \"month\": \"$MONTH\", \"day\": \"$DAY\"}" \
-            --profiles-dir ~/.dbt \
-            --project-dir .
+          - name: 🧪 Validate DBT Project
+            run: |
+              dbt compile \
+                --profiles-dir ~/.dbt \
+                --project-dir .
+
+
+          - name: 🧪 DBT Debug
+            run: |
+              dbt debug --profiles-dir ~/.dbt --project-dir .
+
 
