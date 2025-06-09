@@ -49,7 +49,7 @@ jobs:
 
 
 
-      - name: 🚀 Run dbt models with dynamic date
+      - name: 🚀 Run dbt models securely
         run: |
           TODAY=$(date +'%Y %m %d')
           set -- $TODAY
@@ -57,9 +57,16 @@ jobs:
           MONTH=$2
           DAY=$3
           echo "DBT starting load for $YEAR, $MONTH, $DAY"
-          
+      
           dbt deps
+      
+          mkdir -p logs
+      
+          # Run dbt with log output but without exposing secrets
           dbt run \
             --vars "{\"year\": \"$YEAR\", \"month\": \"$MONTH\", \"day\": \"$DAY\"}" \
             --profiles-dir ~/.dbt \
-            --project-dir .
+            --project-dir . \
+            --log-level debug \
+            --quiet | tee logs/dbt_run_$(date +'%Y%m%d_%H%M%S').log
+
