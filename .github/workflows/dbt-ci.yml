@@ -46,15 +46,8 @@ jobs:
           cat <<EOF > ~/.dbt/profiles.yml
           ${{ secrets.DBT_PROFILES_YML }}
           EOF
-      
-      - name: 🧹 Full cleanup before dbt clean
-        run: |
-          rm -rf target
-          rm -rf dbt_modules
-          find . -name "*.pyc" -delete
 
-      - name: 🧹 Clean dbt artifacts
-        run: dbt clean
+
 
       - name: 🚀 Run dbt models with dynamic date
         run: |
@@ -66,15 +59,7 @@ jobs:
           echo "DBT starting load for $YEAR, $MONTH, $DAY"
           
           dbt deps
-          - name: 🧪 Validate DBT Project
-            run: |
-              dbt compile \
-                --profiles-dir ~/.dbt \
-                --project-dir .
-
-
-          - name: 🧪 DBT Debug
-            run: |
-              dbt debug --profiles-dir ~/.dbt --project-dir .
-
-
+          dbt run \
+            --vars "{\"year\": \"$YEAR\", \"month\": \"$MONTH\", \"day\": \"$DAY\"}" \
+            --profiles-dir ~/.dbt \
+            --project-dir .
