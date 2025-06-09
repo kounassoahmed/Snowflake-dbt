@@ -9,7 +9,6 @@ macro-paths: ["macros"]
 models:
   snowflake_dbt:
     +materialized: table
-    +schema: "{{ generate_schema_name(None, this) }}"
     +alias: "{{ generate_alias_name(None, this) }}"
     
     raw:
