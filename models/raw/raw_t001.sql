@@ -1,4 +1,4 @@
-{{ config(materialized='incremental', unique_key='company_code') }}
+{{ config(materialized='incremental', unique_key='bukrs') }}
 
 select
     bukrs,
