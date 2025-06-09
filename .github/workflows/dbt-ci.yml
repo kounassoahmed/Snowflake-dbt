@@ -46,11 +46,9 @@ jobs:
           cat <<EOF > ~/.dbt/profiles.yml
           ${{ secrets.DBT_PROFILES_YML }}
           EOF
-
-      - name: 🧪 Debug dbt project
-        run: |
-          dbt debug
-          dbt compile --profiles-dir ~/.dbt --project-dir .
+      
+      - name: 🧹 Clean dbt artifacts
+        run: dbt clean
 
 
       - name: 🚀 Run dbt models with dynamic date
