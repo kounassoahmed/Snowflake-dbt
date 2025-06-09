@@ -1,13 +1,13 @@
 
-{{ config(materialized='incremental', unique_key='fact_key', schema='DWH') }}
+{{ config(materialized='incremental', unique_key='fact_key') }}
 
 with joined_data as (
     select
         r.document_key,
-        c.company_name,
-        r.doc_type
+        c.bukrs,
+        r.blart
     from {{ ref('raw_bkpf') }} r
-    join {{ ref('raw_t001') }} c on r.company_code = c.company_code
+    join {{ ref('raw_t001') }} c on r.bukrs = c.bukrs
 )
 
 select
