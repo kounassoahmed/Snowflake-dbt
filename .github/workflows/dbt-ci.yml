@@ -49,32 +49,22 @@ jobs:
 
 
 
-
-      - name: 🔐 Configure dbt profiles.yml
-        run: |
-          mkdir -p ~/.dbt
-          printf "%s\n" "${{ secrets.DBT_PROFILES_YML }}" > ~/.dbt/profiles.yml
-
-      - name: 🧹 Clean dbt artifacts
-        run: dbt clean
-
-      - name: 🧪 Compile dbt project and show SQL
+      - name: 🚀 Run dbt models securely
         run: |
           TODAY=$(date +'%Y %m %d')
           set -- $TODAY
           YEAR=$1
           MONTH=$2
           DAY=$3
-          echo "🕵️ DBT compiling models for $YEAR-$MONTH-$DAY..."
-
-
-      - name: 🚀 Run dbt models
-        run: |
+          echo "DBT starting load for $YEAR, $MONTH, $DAY"
+      
+          dbt deps
+      
+          mkdir -p logs
+      
           dbt run \
             --vars "{\"year\": \"$YEAR\", \"month\": \"$MONTH\", \"day\": \"$DAY\"}" \
             --profiles-dir ~/.dbt \
             --project-dir . \
             --log-level debug \
             --debug
-
-
