@@ -47,9 +47,14 @@ jobs:
           ${{ secrets.DBT_PROFILES_YML }}
           EOF
       
+      - name: 🧹 Full cleanup before dbt clean
+        run: |
+          rm -rf target
+          rm -rf dbt_modules
+          find . -name "*.pyc" -delete
+
       - name: 🧹 Clean dbt artifacts
         run: dbt clean
-
 
       - name: 🚀 Run dbt models with dynamic date
         run: |
