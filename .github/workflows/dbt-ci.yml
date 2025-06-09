@@ -67,14 +67,6 @@ jobs:
           DAY=$3
           echo "🕵️ DBT compiling models for $YEAR-$MONTH-$DAY..."
 
-          dbt deps
-          dbt compile \
-            --vars "{\"year\": \"$YEAR\", \"month\": \"$MONTH\", \"day\": \"$DAY\"}" \
-            --profiles-dir ~/.dbt \
-            --project-dir .
-
-          echo "📄 Showing compiled SQL:"
-          find target/compiled -type f -name "*.sql" -exec echo -e "\n▶ {}:" \; -exec cat {} \;
 
       - name: 🚀 Run dbt models
         run: |
@@ -84,11 +76,5 @@ jobs:
             --project-dir . \
             --log-level debug \
             --debug
-
-      - name: 📦 Upload compiled SQL as artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: compiled-sql
-          path: target/compiled
 
 
