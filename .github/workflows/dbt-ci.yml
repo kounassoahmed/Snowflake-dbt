@@ -64,7 +64,7 @@ jobs:
           
           dbt deps
           dbt run \
-            --select debug_alias \
+            --vars "{\"year\": \"$YEAR\", \"month\": \"$MONTH\", \"day\": \"$DAY\"}" \
             --profiles-dir ~/.dbt \
             --project-dir .
 
