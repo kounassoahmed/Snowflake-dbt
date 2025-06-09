@@ -4,7 +4,7 @@ version: '1.0'
 profile: 'snowflake_dbt'
 
 model-paths: ["models"]
-model-paths: ["macros"]
+macro-paths: ["macros"]
 
 models:
   snowflake_dbt:
