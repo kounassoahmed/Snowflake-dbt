@@ -3,7 +3,7 @@
 select
     concat_ws('-', bukrs, belnr, gjahr, buzei) as line_key,
     *
-from {{ ref('bseg') }}
+from {{ ref('stg_bseg') }}
 
 {% if is_incremental() %}
 where line_key not in (select line_key from {{ this }})
