@@ -62,11 +62,11 @@ jobs:
       
           mkdir -p logs
       
-          # Run dbt with log output but without exposing secrets
           dbt run \
             --vars "{\"year\": \"$YEAR\", \"month\": \"$MONTH\", \"day\": \"$DAY\"}" \
             --profiles-dir ~/.dbt \
             --project-dir . \
             --log-level debug \
-            --quiet | tee logs/dbt_run_$(date +'%Y%m%d_%H%M%S').log
+            --debug
+
 
