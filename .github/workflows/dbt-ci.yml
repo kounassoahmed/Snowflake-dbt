@@ -47,6 +47,10 @@ jobs:
           ${{ secrets.DBT_PROFILES_YML }}
           EOF
 
+      - name: 🧪 Debug dbt project
+        run: |
+          dbt debug
+          dbt compile --profiles-dir ~/.dbt --project-dir .
 
 
       - name: 🚀 Run dbt models with dynamic date
