@@ -7,5 +7,5 @@ select
 from {{ ref('stg_t001') }}
 
 {% if is_incremental() %}
-where company_code not in (select company_code from {{ this }})
+where bukrs not in (select bukrs from {{ this }})
 {% endif %}
