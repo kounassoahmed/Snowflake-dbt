@@ -1,0 +1,70 @@
+name: Run DBT on Snowflake
+
+on:
+  workflow_dispatch:  # Allows manual run
+  # push:
+  #   branches:
+  #     - dev
+  #     - uat
+  #     - prod
+
+jobs:
+  dbt-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 📦 Install dbt
+        run: |
+          python -m pip install --upgrade pip
+          pip install dbt-core dbt-snowflake
+
+      - name: 🛠 Set DBT_ENV from branch name
+        run: |
+          BRANCH_NAME=$(echo "${{ github.ref_name }}" | tr '[:upper:]' '[:lower:]')
+          echo "DBT_ENV=${BRANCH_NAME}" >> $GITHUB_ENV
+
+
+
+      - name: 🔐 Write DBT private key file
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DBT_PRIVATE_KEY }}" > ~/.ssh/dbt_key.p8
+          chmod 600 ~/.ssh/dbt_key.p8
+
+      - name: 🔐 Configure dbt profiles.yml
+        shell: bash
+        run: |
+          mkdir -p ~/.dbt
+          cat <<EOF > ~/.dbt/profiles.yml
+          ${{ secrets.DBT_PROFILES_YML }}
+          EOF
+
+      - name: 🧪 Debug dbt project
+        run: |
+          dbt debug
+          dbt compile --profiles-dir ~/.dbt --project-dir .
+
+
+      - name: 🚀 Run dbt models with dynamic date
+        run: |
+          TODAY=$(date +'%Y %m %d')
+          set -- $TODAY
+          YEAR=$1
+          MONTH=$2
+          DAY=$3
+          echo "DBT starting load for $YEAR, $MONTH, $DAY"
+          
+          dbt deps
+          dbt run \
+            --select debug_alias \
+            --vars "{\"year\": \"$YEAR\", \"month\": \"$MONTH\", \"day\": \"$DAY\"}" \
+            --profiles-dir ~/.dbt \
+            --project-dir .
