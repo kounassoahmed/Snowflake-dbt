@@ -7,3 +7,5 @@ select
     $4::string as blart
 from @DEV_SAP_STG.STG.SAP_STAGE/{{ var('year') }}/{{ var('month') }}/{{ var('day') }}/bkpf.csv
 (file_format => DEV_SAP_STG.STG.CSV_FORMAT)
+
+
