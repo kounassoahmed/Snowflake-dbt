@@ -1,1 +1,2 @@
-# Snowflake-dbt
+# Snowflake-db
+# Add Snowflake Workspace
